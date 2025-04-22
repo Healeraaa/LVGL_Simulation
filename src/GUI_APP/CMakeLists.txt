@@ -1,4 +1,4 @@
-SET(SOURCES screens/ui_HomePage.c
+SET(SOURCES screens/ui_Screen1.c
     ui.c
     ui_helpers.c
     fonts/ui_font_ALIBABA16.c

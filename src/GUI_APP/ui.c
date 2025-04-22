@@ -8,12 +8,12 @@
 
 ///////////////////// VARIABLES ////////////////////
 
-// SCREEN: ui_HomePage
-void ui_HomePage_screen_init(void);
-lv_obj_t * ui_HomePage;
-lv_obj_t * ui_Label2;
-lv_obj_t * ui_Label1;
+// SCREEN: ui_Screen1
+void ui_Screen1_screen_init(void);
+lv_obj_t * ui_Screen1;
 lv_obj_t * ui_iconHeart;
+lv_obj_t * ui_Keyboard2;
+lv_obj_t * ui_Label1;
 lv_obj_t * ui____initial_actions0;
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
@@ -36,7 +36,7 @@ void ui_init(void)
     lv_theme_t * theme = lv_theme_default_init(dispp, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED),
                                                true, LV_FONT_DEFAULT);
     lv_disp_set_theme(dispp, theme);
-    ui_HomePage_screen_init();
+    ui_Screen1_screen_init();
     ui____initial_actions0 = lv_obj_create(NULL);
-    lv_disp_load_scr(ui_HomePage);
+    lv_disp_load_scr(ui_Screen1);
 }
