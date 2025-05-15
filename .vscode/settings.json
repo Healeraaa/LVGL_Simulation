@@ -13,5 +13,9 @@
         ".eide.usr.ctx.json": true,
         ".gitignore": true
     },
-    "C_Cpp.default.configurationProvider": "cl.eide"
+    "C_Cpp.default.configurationProvider": "cl.eide",
+    "files.associations": {
+        "ui.h": "c",
+        "ui_helpers.h": "c"
+    }
 }

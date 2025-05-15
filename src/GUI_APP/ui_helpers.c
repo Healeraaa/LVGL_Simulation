@@ -5,106 +5,138 @@
 
 #include "ui_helpers.h"
 
+/// 设置进度条（lv_bar）的属性
 void _ui_bar_set_property(lv_obj_t * target, int id, int val)
 {
-    if(id == _UI_BAR_PROPERTY_VALUE_WITH_ANIM) lv_bar_set_value(target, val, LV_ANIM_ON);
-    if(id == _UI_BAR_PROPERTY_VALUE) lv_bar_set_value(target, val, LV_ANIM_OFF);
+    if(id == _UI_BAR_PROPERTY_VALUE_WITH_ANIM) 
+        lv_bar_set_value(target, val, LV_ANIM_ON);  // 设置值并启用动画
+    if(id == _UI_BAR_PROPERTY_VALUE) 
+        lv_bar_set_value(target, val, LV_ANIM_OFF); // 设置值但不启用动画
 }
 
+/// 设置基础属性（位置和尺寸）
 void _ui_basic_set_property(lv_obj_t * target, int id, int val)
 {
-    if(id == _UI_BASIC_PROPERTY_POSITION_X) lv_obj_set_x(target, val);
-    if(id == _UI_BASIC_PROPERTY_POSITION_Y) lv_obj_set_y(target, val);
-    if(id == _UI_BASIC_PROPERTY_WIDTH) lv_obj_set_width(target, val);
-    if(id == _UI_BASIC_PROPERTY_HEIGHT) lv_obj_set_height(target, val);
+    if(id == _UI_BASIC_PROPERTY_POSITION_X) lv_obj_set_x(target, val);       // 设置X坐标
+    if(id == _UI_BASIC_PROPERTY_POSITION_Y) lv_obj_set_y(target, val);       // 设置Y坐标
+    if(id == _UI_BASIC_PROPERTY_WIDTH) lv_obj_set_width(target, val);        // 设置宽度
+    if(id == _UI_BASIC_PROPERTY_HEIGHT) lv_obj_set_height(target, val);      // 设置高度
 }
 
+/// 设置下拉框（lv_dropdown）属性
 void _ui_dropdown_set_property(lv_obj_t * target, int id, int val)
 {
-    if(id == _UI_DROPDOWN_PROPERTY_SELECTED) lv_dropdown_set_selected(target, val);
+    if(id == _UI_DROPDOWN_PROPERTY_SELECTED) 
+        lv_dropdown_set_selected(target, val); // 设置选中项索引
 }
 
+/// 设置图片控件的图像资源
 void _ui_image_set_property(lv_obj_t * target, int id, uint8_t * val)
 {
-    if(id == _UI_IMAGE_PROPERTY_IMAGE) lv_img_set_src(target, val);
+    if(id == _UI_IMAGE_PROPERTY_IMAGE) 
+        lv_img_set_src(target, val); // 设置图片源
 }
 
+/// 设置标签控件（lv_label）的文本
 void _ui_label_set_property(lv_obj_t * target, int id, const char * val)
 {
-    if(id == _UI_LABEL_PROPERTY_TEXT) lv_label_set_text(target, val);
+    if(id == _UI_LABEL_PROPERTY_TEXT) 
+        lv_label_set_text(target, val); // 设置文本内容
 }
 
+/// 设置滚轮（lv_roller）控件的属性
 void _ui_roller_set_property(lv_obj_t * target, int id, int val)
 {
-    if(id == _UI_ROLLER_PROPERTY_SELECTED_WITH_ANIM) lv_roller_set_selected(target, val, LV_ANIM_ON);
-    if(id == _UI_ROLLER_PROPERTY_SELECTED) lv_roller_set_selected(target, val, LV_ANIM_OFF);
+    if(id == _UI_ROLLER_PROPERTY_SELECTED_WITH_ANIM) 
+        lv_roller_set_selected(target, val, LV_ANIM_ON); // 启用动画地设置选中项
+    if(id == _UI_ROLLER_PROPERTY_SELECTED) 
+        lv_roller_set_selected(target, val, LV_ANIM_OFF); // 静默设置
 }
 
+/// 设置滑动条（lv_slider）的属性
 void _ui_slider_set_property(lv_obj_t * target, int id, int val)
 {
-    if(id == _UI_SLIDER_PROPERTY_VALUE_WITH_ANIM) lv_slider_set_value(target, val, LV_ANIM_ON);
-    if(id == _UI_SLIDER_PROPERTY_VALUE) lv_slider_set_value(target, val, LV_ANIM_OFF);
+    if(id == _UI_SLIDER_PROPERTY_VALUE_WITH_ANIM) 
+        lv_slider_set_value(target, val, LV_ANIM_ON); // 启用动画地设置值
+    if(id == _UI_SLIDER_PROPERTY_VALUE) 
+        lv_slider_set_value(target, val, LV_ANIM_OFF); // 静默设置值
 }
 
+/// 切换界面
 void _ui_screen_change(lv_obj_t * target, lv_scr_load_anim_t fademode, int spd, int delay)
 {
-    lv_scr_load_anim(target, fademode, spd, delay, false);
+    lv_scr_load_anim(target, fademode, spd, delay, false); // 切换屏幕并使用动画
 }
 
+/// 增加圆弧值，并触发事件
 void _ui_arc_increment(lv_obj_t * target, int val)
 {
     int old = lv_arc_get_value(target);
-    lv_arc_set_value(target, old + val);
-    lv_event_send(target, LV_EVENT_VALUE_CHANGED, 0);
+    lv_arc_set_value(target, old + val); // 设置新值
+    lv_event_send(target, LV_EVENT_VALUE_CHANGED, 0); // 触发值改变事件
 }
 
+/// 增加进度条的值
 void _ui_bar_increment(lv_obj_t * target, int val, int anm)
 {
     int old = lv_bar_get_value(target);
-    lv_bar_set_value(target, old + val, anm);
+    lv_bar_set_value(target, old + val, anm); // anm决定是否启用动画
 }
 
+/// 增加滑动条的值
 void _ui_slider_increment(lv_obj_t * target, int val, int anm)
 {
     int old = lv_slider_get_value(target);
     lv_slider_set_value(target, old + val, anm);
-    lv_event_send(target, LV_EVENT_VALUE_CHANGED, 0);
+    lv_event_send(target, LV_EVENT_VALUE_CHANGED, 0); // 发送值改变事件
 }
 
+/// 设置键盘的目标输入框（textarea）
 void _ui_keyboard_set_target(lv_obj_t * keyboard, lv_obj_t * textarea)
 {
     lv_keyboard_set_textarea(keyboard, textarea);
 }
 
+/// 修改控件 flag（如是否可见、是否可点击等）
 void _ui_flag_modify(lv_obj_t * target, int32_t flag, int value)
 {
     if(value == _UI_MODIFY_FLAG_TOGGLE) {
         if(lv_obj_has_flag(target, flag)) lv_obj_clear_flag(target, flag);
         else lv_obj_add_flag(target, flag);
     }
-    else if(value == _UI_MODIFY_FLAG_ADD) lv_obj_add_flag(target, flag);
-    else lv_obj_clear_flag(target, flag);
+    else if(value == _UI_MODIFY_FLAG_ADD) 
+        lv_obj_add_flag(target, flag);
+    else 
+        lv_obj_clear_flag(target, flag);
 }
+
+/// 修改控件状态（如是否选中、禁用等）
 void _ui_state_modify(lv_obj_t * target, int32_t state, int value)
 {
     if(value == _UI_MODIFY_STATE_TOGGLE) {
         if(lv_obj_has_state(target, state)) lv_obj_clear_state(target, state);
         else lv_obj_add_state(target, state);
     }
-    else if(value == _UI_MODIFY_STATE_ADD) lv_obj_add_state(target, state);
-    else lv_obj_clear_state(target, state);
+    else if(value == _UI_MODIFY_STATE_ADD) 
+        lv_obj_add_state(target, state);
+    else 
+        lv_obj_clear_state(target, state);
 }
 
+/// 设置控件的透明度
 void _ui_opacity_set(lv_obj_t * target, int val)
 {
     lv_obj_set_style_opa(target, val, 0);
 }
 
+/// 动画结束时释放用户数据
 void _ui_anim_callback_free_user_data(lv_anim_t * a)
 {
     lv_mem_free(a->user_data);
     a->user_data = NULL;
 }
+
+/// 以下是设置类动画回调函数，用于动画中设置位置/尺寸/透明度等属性
 
 void _ui_anim_callback_set_x(lv_anim_t * a, int32_t v)
 {
@@ -148,6 +180,7 @@ void _ui_anim_callback_set_image_angle(lv_anim_t * a, int32_t v)
     lv_img_set_angle(usr->target, v);
 }
 
+/// 设置帧动画图像索引
 void _ui_anim_callback_set_image_frame(lv_anim_t * a, int32_t v)
 {
     ui_anim_user_data_t * usr = (ui_anim_user_data_t *)a->user_data;
@@ -156,6 +189,8 @@ void _ui_anim_callback_set_image_frame(lv_anim_t * a, int32_t v)
     if(v >= usr->imgset_size) v = usr->imgset_size - 1;
     lv_img_set_src(usr->target, usr->imgset[v]);
 }
+
+/// 以下是获取类动画回调函数，获取控件当前值用于动画插值计算
 
 int32_t _ui_anim_callback_get_x(lv_anim_t * a)
 {
@@ -205,6 +240,7 @@ int32_t _ui_anim_callback_get_image_frame(lv_anim_t * a)
     return usr->val;
 }
 
+/// 将圆弧数值显示为标签内容（带前缀后缀）
 void _ui_arc_set_text_value(lv_obj_t * trg, lv_obj_t * src, const char * prefix, const char * postfix)
 {
     char buf[_UI_TEMPORARY_STRING_BUFFER_SIZE];
@@ -212,15 +248,19 @@ void _ui_arc_set_text_value(lv_obj_t * trg, lv_obj_t * src, const char * prefix,
     lv_label_set_text(trg, buf);
 }
 
+/// 将滑动条数值显示为标签内容
 void _ui_slider_set_text_value(lv_obj_t * trg, lv_obj_t * src, const char * prefix, const char * postfix)
 {
     char buf[_UI_TEMPORARY_STRING_BUFFER_SIZE];
     lv_snprintf(buf, sizeof(buf), "%s%d%s", prefix, (int)lv_slider_get_value(src), postfix);
     lv_label_set_text(trg, buf);
 }
+
+/// 根据控件是否被选中，显示不同文本
 void _ui_checked_set_text_value(lv_obj_t * trg, lv_obj_t * src, const char * txt_on, const char * txt_off)
 {
-    if(lv_obj_has_state(src, LV_STATE_CHECKED)) lv_label_set_text(trg, txt_on);
-    else lv_label_set_text(trg, txt_off);
+    if(lv_obj_has_state(src, LV_STATE_CHECKED)) 
+        lv_label_set_text(trg, txt_on);
+    else 
+        lv_label_set_text(trg, txt_off);
 }
-
