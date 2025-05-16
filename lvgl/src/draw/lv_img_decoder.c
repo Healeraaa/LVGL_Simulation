@@ -15,8 +15,8 @@
 /*********************
  *      DEFINES
  *********************/
-#define CF_BUILT_IN_FIRST   LV_IMG_CF_TRUE_COLOR
-#define CF_BUILT_IN_LAST    LV_IMG_CF_RGB565A8
+#define CF_BUILT_IN_FIRST LV_IMG_CF_TRUE_COLOR
+#define CF_BUILT_IN_LAST LV_IMG_CF_ALPHA_8BIT
 
 /**********************
  *      TYPEDEFS
@@ -146,7 +146,7 @@ lv_res_t lv_img_decoder_open(lv_img_decoder_dsc_t * dsc, const void * src, lv_co
         dsc->decoder = decoder;
         res = decoder->open_cb(decoder, dsc);
 
-        /*Opened successfully. It is a good decoder for this image source*/
+        /*Opened successfully. It is a good decoder to for this image source*/
         if(res == LV_RES_OK) return res;
 
         /*Prepare for the next loop*/
@@ -272,7 +272,7 @@ void lv_img_decoder_set_close_cb(lv_img_decoder_t * decoder, lv_img_decoder_clos
  */
 lv_res_t lv_img_decoder_built_in_info(lv_img_decoder_t * decoder, const void * src, lv_img_header_t * header)
 {
-    LV_UNUSED(decoder); /*Unused*/
+    (void)decoder; /*Unused*/
 
     lv_img_src_t src_type = lv_img_src_get_type(src);
     if(src_type == LV_IMG_SRC_VARIABLE) {
@@ -361,9 +361,7 @@ lv_res_t lv_img_decoder_built_in_open(lv_img_decoder_t * decoder, lv_img_decoder
 
     lv_img_cf_t cf = dsc->header.cf;
     /*Process true color formats*/
-    if(cf == LV_IMG_CF_TRUE_COLOR || cf == LV_IMG_CF_TRUE_COLOR_ALPHA ||
-       cf == LV_IMG_CF_TRUE_COLOR_CHROMA_KEYED || cf == LV_IMG_CF_RGB565A8 ||
-       cf == LV_IMG_CF_ALPHA_8BIT) {
+    if(cf == LV_IMG_CF_TRUE_COLOR || cf == LV_IMG_CF_TRUE_COLOR_ALPHA || cf == LV_IMG_CF_TRUE_COLOR_CHROMA_KEYED) {
         if(dsc->src_type == LV_IMG_SRC_VARIABLE) {
             /*In case of uncompressed formats the image stored in the ROM/RAM.
              *So simply give its pointer*/
@@ -428,7 +426,8 @@ lv_res_t lv_img_decoder_built_in_open(lv_img_decoder_t * decoder, lv_img_decoder
         return LV_RES_OK;
     }
     /*Alpha indexed images.*/
-    else if(cf == LV_IMG_CF_ALPHA_1BIT || cf == LV_IMG_CF_ALPHA_2BIT || cf == LV_IMG_CF_ALPHA_4BIT) {
+    else if(cf == LV_IMG_CF_ALPHA_1BIT || cf == LV_IMG_CF_ALPHA_2BIT || cf == LV_IMG_CF_ALPHA_4BIT ||
+            cf == LV_IMG_CF_ALPHA_8BIT) {
         return LV_RES_OK; /*Nothing to process*/
     }
     /*Unknown format. Can't decode it.*/
@@ -455,7 +454,7 @@ lv_res_t lv_img_decoder_built_in_open(lv_img_decoder_t * decoder, lv_img_decoder
 lv_res_t lv_img_decoder_built_in_read_line(lv_img_decoder_t * decoder, lv_img_decoder_dsc_t * dsc, lv_coord_t x,
                                            lv_coord_t y, lv_coord_t len, uint8_t * buf)
 {
-    LV_UNUSED(decoder); /*Unused*/
+    (void)decoder; /*Unused*/
 
     lv_res_t res = LV_RES_INV;
 
@@ -490,7 +489,7 @@ lv_res_t lv_img_decoder_built_in_read_line(lv_img_decoder_t * decoder, lv_img_de
  */
 void lv_img_decoder_built_in_close(lv_img_decoder_t * decoder, lv_img_decoder_dsc_t * dsc)
 {
-    LV_UNUSED(decoder); /*Unused*/
+    (void)decoder; /*Unused*/
 
     lv_img_decoder_built_in_data_t * user_data = dsc->user_data;
     if(user_data) {

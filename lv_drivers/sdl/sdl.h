@@ -23,8 +23,6 @@ extern "C" {
 
 #if USE_MONITOR || USE_SDL
 
-#include "sdl_common.h"
-
 #ifdef LV_LVGL_H_INCLUDE_SIMPLE
 #include "lvgl.h"
 #else
@@ -50,17 +48,17 @@ void sdl_init(void);
 
 /**
  * Flush a buffer to the marked area
- * @param disp_drv pointer to driver where this function belongs
+ * @param drv pointer to driver where this function belongs
  * @param area an area where to copy `color_p`
- * @param color_p an array of pixels to copy to the `area` part of the screen
+ * @param color_p an array of pixel to copy to the `area` part of the screen
  */
 void sdl_display_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_color_t * color_p);
 
 /**
  * Flush a buffer to the marked area
- * @param disp_drv pointer to driver where this function belongs
+ * @param drv pointer to driver where this function belongs
  * @param area an area where to copy `color_p`
- * @param color_p an array of pixels to copy to the `area` part of the screen
+ * @param color_p an array of pixel to copy to the `area` part of the screen
  */
 void sdl_display_flush2(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_color_t * color_p);
 
@@ -100,4 +98,4 @@ void sdl_keyboard_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data);
 } /* extern "C" */
 #endif
 
-#endif /* SDL_H */
+#endif /* MONITOR_H */

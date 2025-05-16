@@ -2,12 +2,11 @@
 #if LV_MEM_CUSTOM == 0
 
 #include <limits.h>
+#include <stddef.h>
 #include "lv_tlsf.h"
 #include "lv_mem.h"
 #include "lv_log.h"
 #include "lv_assert.h"
-
-#undef  printf
 #define printf LV_LOG_ERROR
 
 #define TLSF_MAX_POOL_SIZE LV_MEM_SIZE
@@ -828,7 +827,7 @@ static void integrity_walker(void * ptr, size_t size, int used, void * user)
     const size_t this_block_size = block_size(block);
 
     int status = 0;
-    LV_UNUSED(used);
+    (void)used;
     tlsf_insist(integ->prev_status == this_prev_status && "prev status incorrect");
     tlsf_insist(size == this_block_size && "block size incorrect");
 
@@ -887,7 +886,7 @@ int lv_tlsf_check(lv_tlsf_t tlsf)
 
 static void default_walker(void * ptr, size_t size, int used, void * user)
 {
-    LV_UNUSED(user);
+    (void)user;
     printf("\t%p %s size: %x (%p)\n", ptr, used ? "used" : "free", (unsigned int)size, (void *)block_from_ptr(ptr));
 }
 
@@ -1087,7 +1086,7 @@ lv_tlsf_t lv_tlsf_create_with_pool(void * mem, size_t bytes)
 void lv_tlsf_destroy(lv_tlsf_t tlsf)
 {
     /* Nothing to do. */
-    LV_UNUSED(tlsf);
+    (void)tlsf;
 }
 
 lv_pool_t lv_tlsf_get_pool(lv_tlsf_t tlsf)
@@ -1157,22 +1156,18 @@ void * lv_tlsf_memalign(lv_tlsf_t tlsf, size_t align, size_t size)
     return block_prepare_used(control, block, adjust);
 }
 
-size_t lv_tlsf_free(lv_tlsf_t tlsf, const void * ptr)
+void lv_tlsf_free(lv_tlsf_t tlsf, void * ptr)
 {
-    size_t size = 0;
     /* Don't attempt to free a NULL pointer. */
     if(ptr) {
         control_t * control = tlsf_cast(control_t *, tlsf);
         block_header_t * block = block_from_ptr(ptr);
         tlsf_assert(!block_is_free(block) && "block already marked as free");
-        size = block->size;
         block_mark_as_free(block);
         block = block_merge_prev(control, block);
         block = block_merge_next(control, block);
         block_insert(control, block);
     }
-
-    return size;
 }
 
 /*
@@ -1208,10 +1203,6 @@ void * lv_tlsf_realloc(lv_tlsf_t tlsf, void * ptr, size_t size)
         const size_t cursize = block_size(block);
         const size_t combined = cursize + block_size(next) + block_header_overhead;
         const size_t adjust = adjust_request_size(size, ALIGN_SIZE);
-        if(size > cursize && adjust == 0) {
-            /* The request is probably too large, fail */
-            return NULL;
-        }
 
         tlsf_assert(!block_is_free(block) && "block already marked as free");
 

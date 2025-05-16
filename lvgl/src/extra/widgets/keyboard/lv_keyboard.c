@@ -98,26 +98,18 @@ static const lv_btnmatrix_ctrl_t default_kb_ctrl_num_map[] = {
     1, 1, 1, 1, 1
 };
 
-static const char * * kb_map[9] = {
+static const char * * kb_map[5] = {
     (const char * *)default_kb_map_lc,
     (const char * *)default_kb_map_uc,
     (const char * *)default_kb_map_spec,
     (const char * *)default_kb_map_num,
-    (const char * *)default_kb_map_lc,
-    (const char * *)default_kb_map_lc,
-    (const char * *)default_kb_map_lc,
-    (const char * *)default_kb_map_lc,
     (const char * *)NULL,
 };
-static const lv_btnmatrix_ctrl_t * kb_ctrl[9] = {
+static const lv_btnmatrix_ctrl_t * kb_ctrl[5] = {
     default_kb_ctrl_lc_map,
     default_kb_ctrl_uc_map,
     default_kb_ctrl_spec_map,
     default_kb_ctrl_num_map,
-    default_kb_ctrl_lc_map,
-    default_kb_ctrl_lc_map,
-    default_kb_ctrl_lc_map,
-    default_kb_ctrl_lc_map,
     NULL,
 };
 
@@ -130,8 +122,8 @@ static const lv_btnmatrix_ctrl_t * kb_ctrl[9] = {
  **********************/
 
 /**
- * Create a Keyboard object
- * @param parent pointer to an object, it will be the parent of the new keyboard
+ * Create a keyboard objects
+ * @param par pointer to an object, it will be the parent of the new keyboard
  * @return pointer to the created keyboard
  */
 lv_obj_t * lv_keyboard_create(lv_obj_t * parent)
@@ -197,7 +189,7 @@ void lv_keyboard_set_popovers(lv_obj_t * obj, bool en)
 {
     lv_keyboard_t * keyboard = (lv_keyboard_t *)obj;
 
-    if(keyboard->popovers == en) {
+    if (keyboard->popovers == en) {
         return;
     }
 
@@ -285,19 +277,19 @@ void lv_keyboard_def_event_cb(lv_event_t * e)
     if(strcmp(txt, "abc") == 0) {
         keyboard->mode = LV_KEYBOARD_MODE_TEXT_LOWER;
         lv_btnmatrix_set_map(obj, kb_map[LV_KEYBOARD_MODE_TEXT_LOWER]);
-        lv_keyboard_update_ctrl_map(obj);
+        lv_btnmatrix_set_ctrl_map(obj, kb_ctrl[LV_KEYBOARD_MODE_TEXT_LOWER]);
         return;
     }
     else if(strcmp(txt, "ABC") == 0) {
         keyboard->mode = LV_KEYBOARD_MODE_TEXT_UPPER;
         lv_btnmatrix_set_map(obj, kb_map[LV_KEYBOARD_MODE_TEXT_UPPER]);
-        lv_keyboard_update_ctrl_map(obj);
+        lv_btnmatrix_set_ctrl_map(obj, kb_ctrl[LV_KEYBOARD_MODE_TEXT_UPPER]);
         return;
     }
     else if(strcmp(txt, "1#") == 0) {
         keyboard->mode = LV_KEYBOARD_MODE_SPECIAL;
         lv_btnmatrix_set_map(obj, kb_map[LV_KEYBOARD_MODE_SPECIAL]);
-        lv_keyboard_update_ctrl_map(obj);
+        lv_btnmatrix_set_ctrl_map(obj, kb_ctrl[LV_KEYBOARD_MODE_SPECIAL]);
         return;
     }
     else if(strcmp(txt, LV_SYMBOL_CLOSE) == 0 || strcmp(txt, LV_SYMBOL_KEYBOARD) == 0) {
@@ -406,11 +398,10 @@ static void lv_keyboard_update_ctrl_map(lv_obj_t * obj)
 {
     lv_keyboard_t * keyboard = (lv_keyboard_t *)obj;
 
-    if(keyboard->popovers) {
+    if (keyboard->popovers) {
         /*Apply the current control map (already includes LV_BTNMATRIX_CTRL_POPOVER flags)*/
         lv_btnmatrix_set_ctrl_map(obj, kb_ctrl[keyboard->mode]);
-    }
-    else {
+    } else {
         /*Make a copy of the current control map*/
         lv_btnmatrix_t * btnm = (lv_btnmatrix_t *)obj;
         lv_btnmatrix_ctrl_t * ctrl_map = lv_mem_alloc(btnm->btn_cnt * sizeof(lv_btnmatrix_ctrl_t));

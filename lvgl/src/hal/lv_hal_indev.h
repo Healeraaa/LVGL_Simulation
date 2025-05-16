@@ -113,7 +113,7 @@ typedef struct _lv_indev_drv_t {
     /**< Drag throw slow-down in [%]. Greater value means faster slow-down*/
     uint8_t scroll_throw;
 
-    /**< At least this difference should be between two points to evaluate as gesture*/
+    /**< At least this difference should between two points to evaluate as gesture*/
     uint8_t gesture_min_velocity;
 
     /**< At least this difference should be to send a gesture*/
@@ -141,7 +141,6 @@ typedef struct _lv_indev_proc_t {
         struct {
             /*Pointer and button data*/
             lv_point_t act_point; /**< Current point of input device.*/
-            lv_point_t indev_point;
             lv_point_t last_point; /**< Last point of input device.*/
             lv_point_t last_raw_point; /**< Last point read from read_cb. */
             lv_point_t vect; /**< Difference between `act_point` and `last_point`.*/
@@ -188,7 +187,7 @@ typedef struct _lv_indev_t {
 
 /**
  * Initialize an input device driver with default values.
- * It is used to surely have known values in the fields and not memory junk.
+ * It is used to surly have known values in the fields ant not memory junk.
  * After it you can set the fields.
  * @param driver pointer to driver variable to initialize
  */
@@ -203,22 +202,16 @@ lv_indev_t * lv_indev_drv_register(struct _lv_indev_drv_t * driver);
 
 /**
  * Update the driver in run time.
- * @param indev pointer to an input device. (return value of `lv_indev_drv_register`)
+ * @param indev pointer to a input device. (return value of `lv_indev_drv_register`)
  * @param new_drv pointer to the new driver
  */
 void lv_indev_drv_update(lv_indev_t * indev, struct _lv_indev_drv_t * new_drv);
 
 /**
-* Remove the provided input device. Make sure not to use the provided input device afterwards anymore.
-* @param indev pointer to delete
-*/
-void lv_indev_delete(lv_indev_t * indev);
-
-/**
  * Get the next input device.
  * @param indev pointer to the current input device. NULL to initialize.
- * @return the next input device or NULL if there are no more. Provide the first input device when
- * the parameter is NULL
+ * @return the next input devise or NULL if no more. Give the first input device when the parameter
+ * is NULL
  */
 lv_indev_t * lv_indev_get_next(lv_indev_t * indev);
 
