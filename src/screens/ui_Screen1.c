@@ -5,20 +5,21 @@
 
 #include "../ui.h"
 
-
+static void Screen1_timer(lv_timer_t *timer);
+lv_timer_t * timer;
 
 void ui_Screen1_screen_init(void)
 {
     ui_Screen1 = lv_obj_create(NULL);
-    lv_obj_clear_flag(ui_Screen1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_clear_flag(ui_Screen1, LV_OBJ_FLAG_SCROLLABLE); /// Flags
     lv_obj_set_style_bg_color(ui_Screen1, lv_color_hex(0x00FFA2), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_Screen1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_grad_color(ui_Screen1, lv_color_hex(0x00FFFC), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_grad_dir(ui_Screen1, LV_GRAD_DIR_VER, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_iconHeart = lv_label_create(ui_Screen1);
-    lv_obj_set_width(ui_iconHeart, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_iconHeart, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_width(ui_iconHeart, LV_SIZE_CONTENT);  /// 1
+    lv_obj_set_height(ui_iconHeart, LV_SIZE_CONTENT); /// 1
     lv_obj_set_x(ui_iconHeart, 2);
     lv_obj_set_y(ui_iconHeart, -95);
     lv_obj_set_align(ui_iconHeart, LV_ALIGN_CENTER);
@@ -28,8 +29,8 @@ void ui_Screen1_screen_init(void)
     lv_obj_set_style_text_font(ui_iconHeart, &ui_font_iconfont32, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_Label1 = lv_label_create(ui_Screen1);
-    lv_obj_set_width(ui_Label1, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Label1, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_width(ui_Label1, LV_SIZE_CONTENT);  /// 1
+    lv_obj_set_height(ui_Label1, LV_SIZE_CONTENT); /// 1
     lv_obj_set_x(ui_Label1, 3);
     lv_obj_set_y(ui_Label1, -65);
     lv_obj_set_align(ui_Label1, LV_ALIGN_CENTER);
@@ -44,8 +45,8 @@ void ui_Screen1_screen_init(void)
     lv_obj_set_x(ui_Button3, 0);
     lv_obj_set_y(ui_Button3, -20);
     lv_obj_set_align(ui_Button3, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_Button3, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_clear_flag(ui_Button3, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_add_flag(ui_Button3, LV_OBJ_FLAG_SCROLL_ON_FOCUS); /// Flags
+    lv_obj_clear_flag(ui_Button3, LV_OBJ_FLAG_SCROLLABLE);    /// Flags
     lv_obj_set_style_radius(ui_Button3, 35, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_color(ui_Button3, lv_color_hex(0xFFE800), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_Button3, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -90,8 +91,8 @@ void ui_Screen1_screen_init(void)
     lv_obj_set_style_bg_grad_dir(ui_Switch3, LV_GRAD_DIR_HOR, LV_PART_KNOB | LV_STATE_DEFAULT);
 
     ui_Label4 = lv_label_create(ui_Screen1);
-    lv_obj_set_width(ui_Label4, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Label4, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_width(ui_Label4, LV_SIZE_CONTENT);  /// 1
+    lv_obj_set_height(ui_Label4, LV_SIZE_CONTENT); /// 1
     lv_obj_set_x(ui_Label4, 0);
     lv_obj_set_y(ui_Label4, -19);
     lv_obj_set_align(ui_Label4, LV_ALIGN_CENTER);
@@ -99,5 +100,15 @@ void ui_Screen1_screen_init(void)
     lv_obj_set_style_text_font(ui_Label4, &ui_font_ALIBABA16, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     lv_obj_add_event_cb(ui_Button3, ui_event_Button3, LV_EVENT_ALL, NULL);
+    timer = lv_timer_create(Screen1_timer, 1000,  NULL);
+}
 
+static void Screen1_timer(lv_timer_t *timer)
+{
+    LV_LOG_USER("Screen1_timer Running");
+}
+
+void Del_timer(void)
+{
+     lv_timer_del(timer);
 }
